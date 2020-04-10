@@ -1,0 +1,135 @@
+#include <iostream>
+using namespace std;
+
+class CCylinder
+{
+private:
+	float m_nRadius;
+	float m_nHight;
+
+public:
+	CCylinder(float ValueRadius, float ValueHight)
+	{
+
+		if (ValueHight >= 1.0 && ValueHight <= 50.0)
+		{
+			m_nHight = ValueHight;
+		}
+		if (ValueHight <= 1.0)
+		{
+			m_nHight = 1;
+		}
+		if (ValueHight >= 50.0)
+		{
+			m_nHight = 50;
+		}
+		if (ValueRadius >= 1.0 && ValueRadius <= 50.0)
+		{
+			m_nRadius = ValueRadius;
+		}
+		if (ValueRadius <= 1.0)
+		{
+			m_nRadius = 1;
+		}
+		if (ValueRadius >= 50.0)
+		{
+			m_nRadius = 50;
+		}
+	}
+	CCylinder()
+	{
+		m_nHight = 10;
+		m_nRadius = 10;
+	}
+	float GetRadius()
+	{
+		return m_nRadius;
+	}
+	float GetHigt()
+	{
+		return m_nHight;
+	}
+	void SetRadius(float ValueRadius)
+	{
+		if (ValueRadius >= 1.0 && ValueRadius <= 50.0)
+		{
+			m_nRadius = ValueRadius;
+		}
+	}
+	void SetHight(float ValueHight)
+	{
+		if (ValueHight >= 1.0 && ValueHight <= 50.0)
+		{
+			m_nHight = ValueHight;
+		}
+	}
+	float fnVolume()
+	{
+		return (m_nHight * ((m_nRadius * m_nRadius) * 3.14));
+	}
+	float fnArea()
+	{
+		return ((m_nRadius * 2 * 3.14) * m_nHight);
+	}
+	float fnRangeThroughHight()
+	{
+		return ((2 * m_nHight) + (4 * m_nRadius));
+	}
+	float fnRangeThroughRadius()
+	{
+		return (2 * 3.14 * m_nRadius);
+	}
+	void fnPrint()
+	{
+		cout << "Radius =" << m_nRadius << endl << "Hight =" << m_nHight << endl << endl;
+	}
+
+	CCylinder& operator = (const CCylinder &other)
+	{
+		this->m_nRadius = other.m_nRadius;
+		this->m_nHight = other.m_nHight;
+		return *this;
+	}
+	CCylinder& operator += (const CCylinder &other)
+	{
+		this->m_nRadius = other.m_nRadius + 1;
+		this->m_nHight = other.m_nHight + 1;
+		return *this;
+	}
+	CCylinder& operator -= (const CCylinder& other)
+	{
+		this->m_nRadius = other.m_nRadius - 1;
+		this->m_nHight = other.m_nHight - 1;
+		return *this;
+	}
+	bool operator <= (const CCylinder& other)
+	{
+		return (this->m_nRadius <= other.m_nRadius && this->m_nHight <= other.m_nHight);
+	}
+	bool operator >= (const CCylinder& other)
+	{
+		return (this->m_nRadius >= other.m_nRadius && this->m_nHight >= other.m_nHight);
+	}
+};
+
+int main()
+{
+	CCylinder A(20, 30);
+	CCylinder C(15, 15);
+	A.fnPrint();
+	A -= C;
+	A.fnPrint();
+
+	CCylinder B;
+	B.fnPrint();
+
+	B = A;
+	B += B;
+	B += B;
+	B.fnPrint();
+
+	if (B >= A) { cout << "B is bigger or equal A" << endl; }
+
+
+	return 0;
+}
