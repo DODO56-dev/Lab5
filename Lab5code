@@ -8,6 +8,9 @@ private:
 	float m_nHight;
 
 public:
+	friend class ostream;
+	friend class istream;
+
 	CCylinder(float ValueRadius, float ValueHight)
 	{
 
@@ -84,6 +87,9 @@ public:
 		cout << "Radius =" << m_nRadius << endl << "Hight =" << m_nHight << endl << endl;
 	}
 
+	friend std::ostream& operator<< (std::ostream& output, const CCylinder &other);
+	friend std::istream& operator>> (std::istream& input, CCylinder& other);
+
 	CCylinder& operator = (const CCylinder &other)
 	{
 		this->m_nRadius = other.m_nRadius;
@@ -111,25 +117,38 @@ public:
 		return (this->m_nRadius >= other.m_nRadius && this->m_nHight >= other.m_nHight);
 	}
 };
+std::ostream& operator<<(std::ostream& output, const CCylinder& other)
+{
+	cout << "Radius:" << other.m_nRadius << endl << "Hight:" << other.m_nHight << endl;
+	return output;
+}
+std::istream& operator>>(std::istream& input, CCylinder& other)
+{
+	cin >> other.m_nRadius >> other.m_nHight;
+	return input;
+}
 
 int main()
 {
 	CCylinder A(20, 30);
 	CCylinder C(15, 15);
-	A.fnPrint();
+	cout << A;
 	A -= C;
-	A.fnPrint();
+	cout << A;
 
 	CCylinder B;
-	B.fnPrint();
+	cin >> B;
+	cout << B;
 
 	B = A;
 	B += B;
 	B += B;
-	B.fnPrint();
+	cout << B;
 
 	if (B >= A) { cout << "B is bigger or equal A" << endl; }
 
 
 	return 0;
 }
+
+
